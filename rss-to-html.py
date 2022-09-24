@@ -29,11 +29,9 @@ def make_html(feed):
                     air(date.strftime("%A, %B %d, %Y %T %z"))
                 air(item.description)
                 with air.p():
-                    with air.a(href=item.enclosures[0].url):
-                        air('Audio')
+                    air.a(href=item.enclosures[0].url, _t="Audio")
                     air('—')
-                    with air.a(href=item.link):
-                        air('Transcript')
+                    air.a(href=item.link, _t="Transcript")
     return str(air)
 
 if len(sys.argv) == 1:
