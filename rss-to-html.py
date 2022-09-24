@@ -29,9 +29,13 @@ def make_html(feed):
                     air(date.strftime("%A, %B %d, %Y %T %z"))
                 air(item.description)
                 with air.p():
-                    air.a(href=item.enclosures[0].url, _t="Audio")
-                    air('—')
-                    air.a(href=item.link, _t="Transcript")
+                    air.a(href=item.link, _t="Link")
+                with air.p():
+                    air.strong(_t="Enclosures:")
+                with air.ol():
+                    for enc in item.enclosures:
+                        with air.li():
+                            air.a(href=enc.url, _t="{0} link".format(enc.type))
     return str(air)
 
 if len(sys.argv) == 1:
