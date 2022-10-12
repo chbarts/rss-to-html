@@ -3,6 +3,7 @@
 import os
 import sys
 import atoma
+import argparse
 from airium import Airium
 from datetime import datetime, timezone
 
@@ -42,8 +43,30 @@ def make_html(feed):
                                             air.a(href=enc.url, _t="{0} link".format(enc.type))
     return str(air)
 
-if len(sys.argv) == 1:
-    print("Usage: rss-to-html rss.xml > rss.html")
-    sys.exit(0)
+def rss2html(inf, outf):
+    outf.write(make_html(atoma.parse_rss_bytes(inf.read())))
+    outf.write("\n")
 
-print(make_html(atoma.parse_rss_file(sys.argv[1])))
+parser = argparse.ArgumentParser(description='Convert RSS to HTML')
+
+parser.add_argument('-i', '--input', metavar='INFILE', type=str, nargs=1, default='', help='Specify INFILE as RSS input file, defaults to stdin')
+parser.add_argument('-o', '--output', metavar='OUTFILE', type=str, nargs=1, default='', help='Specify OUTFILE as HTML output file, defaults to stdout')
+
+args = parser.parse_args()
+
+if (len(args.input) > 0) and (len(args.output) > 0):
+    with open(args.input[0], 'rb') as inf:
+        with open(args.output[0], 'w') as outf:
+            rss2html(inf, outf)
+    sys.exit(0)
+elif len(args.input) > 0:
+    with open(args.input[0], 'rb') as inf:
+        rss2html(inf, sys.stdout)
+    sys.exit(0)
+elif len(args.output) > 0:
+    with open(args.output[0], 'w') as outf:
+        rss2html(sys.stdin.buffer, outf)
+    sys.exit(0)
+else:
+    rss2html(sys.stdin.buffer, sys.stdout)
+    sys.exit(0)
