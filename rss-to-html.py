@@ -13,7 +13,7 @@ def utc_to_local(utc_dt):
 def make_html(feed):
     air = Airium()
     air('<!DOCTYPE html>')
-    with air.html(lang="en"):
+    with air.html(lang=feed.language):
         with air.head():
             air.meta(charset="utf-8")
             air.title(_t=feed.title)
