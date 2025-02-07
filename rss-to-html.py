@@ -19,6 +19,12 @@ def make_html(feed):
             air.title(_t=feed.title)
         with air.body():
             with air.div(klass="main"):
+                if feed.link:
+                    with air.div(klass="link"):
+                        with air.h1():
+                            air.a(href=feed.link, _t=feed.title)
+                else:
+                    air.h1(_t=feed.title)
                 with air.p(klass="description", style="background-color: rgb(220,220,220); margin: 1em;"):
                     air.strong(_t="Description: ")
                     air(feed.description)
