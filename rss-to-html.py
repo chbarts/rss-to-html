@@ -53,13 +53,12 @@ def rss2html(inf, outf):
     outf.write(make_html(atoma.parse_rss_bytes(inf.read())))
     outf.write("\n")
 
-parser = argparse.ArgumentParser(description='Convert RSS to HTML')
-
-parser.add_argument('-i', '--input', metavar='INFILE', type=str, nargs=1, default='', help='Specify INFILE as RSS input file, defaults to stdin')
-parser.add_argument('-o', '--output', metavar='OUTFILE', type=str, nargs=1, default='', help='Specify OUTFILE as HTML output file, defaults to stdout')
-
 
 def main():
+    parser = argparse.ArgumentParser(description='Convert RSS to HTML')
+
+    parser.add_argument('-i', '--input', metavar='INFILE', type=str, nargs=1, default='', help='Specify INFILE as RSS input file, defaults to stdin')
+    parser.add_argument('-o', '--output', metavar='OUTFILE', type=str, nargs=1, default='', help='Specify OUTFILE as HTML output file, defaults to stdout')
     args = parser.parse_args()
 
     if (len(args.input) > 0) and (len(args.output) > 0):
@@ -78,3 +77,6 @@ def main():
     else:
         rss2html(sys.stdin.buffer, sys.stdout)
         sys.exit(0)
+
+
+main()
