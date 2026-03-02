@@ -11,3 +11,6 @@ dependencies = [
     "airium",
     "atoma"
 ]
+
+[project.scripts]
+rss-to-html = ["rss-to-html:main"]

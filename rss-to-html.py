@@ -58,21 +58,23 @@ parser = argparse.ArgumentParser(description='Convert RSS to HTML')
 parser.add_argument('-i', '--input', metavar='INFILE', type=str, nargs=1, default='', help='Specify INFILE as RSS input file, defaults to stdin')
 parser.add_argument('-o', '--output', metavar='OUTFILE', type=str, nargs=1, default='', help='Specify OUTFILE as HTML output file, defaults to stdout')
 
-args = parser.parse_args()
 
-if (len(args.input) > 0) and (len(args.output) > 0):
-    with open(args.input[0], 'rb') as inf:
+def main():
+    args = parser.parse_args()
+
+    if (len(args.input) > 0) and (len(args.output) > 0):
+        with open(args.input[0], 'rb') as inf:
+            with open(args.output[0], 'w') as outf:
+                rss2html(inf, outf)
+        sys.exit(0)
+    elif len(args.input) > 0:
+        with open(args.input[0], 'rb') as inf:
+            rss2html(inf, sys.stdout)
+        sys.exit(0)
+    elif len(args.output) > 0:
         with open(args.output[0], 'w') as outf:
-            rss2html(inf, outf)
-    sys.exit(0)
-elif len(args.input) > 0:
-    with open(args.input[0], 'rb') as inf:
-        rss2html(inf, sys.stdout)
-    sys.exit(0)
-elif len(args.output) > 0:
-    with open(args.output[0], 'w') as outf:
-        rss2html(sys.stdin.buffer, outf)
-    sys.exit(0)
-else:
-    rss2html(sys.stdin.buffer, sys.stdout)
-    sys.exit(0)
+            rss2html(sys.stdin.buffer, outf)
+        sys.exit(0)
+    else:
+        rss2html(sys.stdin.buffer, sys.stdout)
+        sys.exit(0)
