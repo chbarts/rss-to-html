@@ -13,4 +13,4 @@ dependencies = [
 ]
 
 [project.scripts]
-rss-to-html = ["rsstohtml:main"]
+rss-to-html = "rsstohtml:main"
