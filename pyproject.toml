@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "rss-to-html"
+version = "0.1"
+license = "CC0-1.0"
+license-files = ["LICENSE"]
+dependencies = [
+    "airium",
+    "atoma"
+]
